@@ -13,8 +13,8 @@ body {
   display: flex;
   /* center the item */
   align-items: center;
-  justify-content: center;
   /* vertical center */
+  justify-content: center;
   min-height: 100vh;
   margin: 0;
 }
