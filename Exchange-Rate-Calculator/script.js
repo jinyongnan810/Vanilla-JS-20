@@ -11,8 +11,12 @@ const calculate = () => {
   fetch(`https://api.exchangeratesapi.io/latest?base=${currencyOne.value}`)
     .then((res) => res.json())
     .then((data) => {
-      numberTwo.value = data['rates'][currencyTwo.value] * +numberOne.value;
-      rate.innerText = data['rates'][currencyTwo.value];
+      numberTwo.value = (
+        data['rates'][currencyTwo.value] * +numberOne.value
+      ).toFixed(2);
+      rate.innerText = `1${currencyOne.value} = ${
+        data['rates'][currencyTwo.value]
+      }${currencyTwo.value}`;
     });
 };
 const swap = () => {
