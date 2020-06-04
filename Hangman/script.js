@@ -11,13 +11,27 @@ const finalMessageRevealWord = document.getElementById(
 const figureParts = document.querySelectorAll('.figure-part');
 
 // select words
-const words = ['happy', 'application', 'inteface', 'wizard'];
+let words = [];
 let selectedWord;
 // word status
 let correctLetters = [];
 let wrongLetters = [];
 // init
+const fetchWords = async () => {
+  const localData = JSON.parse(localStorage.getItem('words'));
+  if (localData) {
+    words = localData;
+    return;
+  }
+  const res = await fetch(
+    `https://random-word-api.herokuapp.com/word?number=${wordsNum}`
+  );
+  const data = await res.json();
+  words = data;
+  localStorage.setItem('words', JSON.stringify(words));
+};
 const init = () => {
+  fetchWords();
   selectedWord = words[Math.floor(Math.random() * words.length)];
   correctLetters = [];
   wrongLetters = [];
