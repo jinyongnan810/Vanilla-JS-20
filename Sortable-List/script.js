@@ -36,6 +36,7 @@ const createList = () => {
             listEl.appendChild(listItem)
             list.push(listItem)
         })
+    addEventListeners()
 }
 
 const checkOrder = () => {
@@ -46,11 +47,45 @@ const checkOrder = () => {
         item.className = index == indexExpected ? 'right' : 'wrong'
     })
 }
+const swap = (start, end) => {
+    const from = list[start].querySelector('.draggable')
+    const to = list[end].querySelector('.draggable')
+    list[start].appendChild(to)
+    list[end].appendChild(from)
+
+}
 
 // event listeners 
 checkBtnEl.addEventListener('click', e => {
     checkOrder()
 })
+const addEventListeners = () => {
+    const draggables = document.querySelectorAll('.draggable')
+    draggables.forEach(draggable => {
+        draggable.addEventListener('dragstart', e => {
+            dragStartIndex = +e.target.closest('li').getAttribute('data-index')
+            console.log(dragStartIndex)
+        })
+    })
+    list.forEach(li => {
+        li.addEventListener('dragenter', e => {
+            li.classList.add('over')
+        })
+        li.addEventListener('dragleave', e => {
+            li.classList.remove('over')
+        })
+        li.addEventListener('dragover', e => {
+            // set dragover to prevent default to enable drop event
+            e.preventDefault()
+        })
+        li.addEventListener('drop', e => {
+            const dragEndIndex = +e.target.closest('li').getAttribute('data-index')
+            swap(dragStartIndex, dragEndIndex)
+            li.classList.remove('over')
+        })
+    })
+
+}
 
 // init 
 createList()
