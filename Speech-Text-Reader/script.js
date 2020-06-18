@@ -56,7 +56,7 @@ const data = [
     text: 'I Want To Go To Grandmas',
   },
 ];
-const message = new SpeechSynthesisUtterance();
+const message = new SpeechSynthesisUtterance('No warning should arise');
 let voices = [];
 // functions
 
